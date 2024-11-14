@@ -1,0 +1,10 @@
+<nav>
+    <ul>
+        <li><a href="{% url 'index' %}" {% if request.path == '/' %}class="active"{% endif %}>Home</a></li>
+        <li><a href="{% url 'product_list' %}" {% if request.path == '/products/' %}class="active"{% endif %}>Products</a></li>
+        <li><a href="{% url 'about' %}" {% if request.path == '/about/' %}class="active"{% endif %}>About</a></li>
+        <li><a href="{% url 'contact' %}" {% if request.path == '/contact/' %}class="active"{% endif %}>Contact</a></li>
+        <li><a href="{% url 'login' %}" {% if request.path == '/login/' %}class="active"{% endif %}>Login</a></li>
+        <li><a href="{% url 'cart' %}" {% if request.path == '/cart/' %}class="active"{% endif %}>Cart</a></li>
+    </ul>
+</nav>
