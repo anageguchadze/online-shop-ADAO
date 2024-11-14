@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Online Store{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'adao_app/css/style.css' %}">
+</head>
+<body>
+    <header>
+        <!-- ნავბარი -->
+        <nav>
+            <ul>
+                <li><a href="{% url 'index' %}" {% if request.path == '/' %}class="active"{% endif %}>Home</a></li>
+                <li><a href="{% url 'product_list' %}" {% if request.path == '/products/' %}class="active"{% endif %}>Products</a></li>
+                <li><a href="{% url 'about' %}" {% if request.path == '/about/' %}class="active"{% endif %}>About</a></li>
+                <li><a href="{% url 'contact' %}" {% if request.path == '/contact/' %}class="active"{% endif %}>Contact</a></li>
+
+                {% if user.is_authenticated %}
+                    <li><p>Welcome, {{ user.username }}! <a href="{% url 'logout' %}">Logout</a></p></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}" {% if request.path == '/login/' %}class="active"{% endif %}>Login</a></li>
+                {% endif %}
+                
+                <li><a href="{% url 'cart' %}" {% if request.path == '/cart/' %}class="active"{% endif %}>Cart</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- აქ მოდის გვერდის კონტენტი -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <!-- ფუტერი ან სხვა ზოგადი ელემენტები -->
+    </footer>
+</body>
+</html>

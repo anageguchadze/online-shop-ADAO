@@ -124,5 +124,5 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_URL = '/media/'  # URL-ის წესის განსაზღვრა
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # ფიზიკური ადგილმდებარეობა, სადაც სურათები ინახება
+MEDIA_URL = '/media/'  
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  

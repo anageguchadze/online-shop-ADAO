@@ -1,14 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'adao_app/css/style.css' %}">
-</head>
-<body>
-    {% include 'adao_app/navbar.html' %}
-    <h1>hello</h1>
-</body>
-</html>
+{% extends 'base.html' %} <!-- base.html-ის მემკვიდრეობით გადმოღება -->
+
+{% block title %}About Us{% endblock %} <!-- სათაურის გადაფარვა base.html-ში -->
+
+{% block content %}
+    <h1>About Us</h1>
+    <p>Learn more about our company and what we do!</p>
+{% endblock %}

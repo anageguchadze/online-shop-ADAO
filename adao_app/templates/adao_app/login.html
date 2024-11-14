@@ -1,14 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LogIn</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'adao_app/css/style.css' %}">
-</head>
-<body>
-    {% include 'adao_app/navbar.html' %}
-    <h1>hello</h1>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <h2>Login</h2>
+
+    <!-- თუ არსებობს შეტყობინება, ის გამოჩნდება მხოლოდ ამ გვერდზე -->
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="message {{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" required autofocus>
+
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required>
+
+        <button type="submit">Login</button>
+    </form>
+
+    <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
+{% endblock %}
