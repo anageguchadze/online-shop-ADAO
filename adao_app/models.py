@@ -19,8 +19,8 @@ class Product(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
+    first_name = models.CharField(max_length=100, blank=True, null=True)  # Allow blank or null
+    last_name = models.CharField(max_length=100, blank=True, null=True)   # Allow blank or null
     phone_number = models.CharField(max_length=9, blank=True, null=True)
     street = models.CharField(max_length=255, blank=True, null=True)
     house_number = models.CharField(max_length=10, blank=True, null=True)
@@ -30,3 +30,4 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return f'{self.user.username} Profile'
+

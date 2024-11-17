@@ -9,7 +9,6 @@
 </head>
 <body>
     <header>
-        <!-- ნავბარი -->
         <nav>
             <ul>
                 <li><a href="{% url 'index' %}" {% if request.path == '/' %}class="active"{% endif %}>Home</a></li>
@@ -27,14 +26,11 @@
             </ul>
         </nav>
     </header>
-
-    <!-- აქ მოდის გვერდის კონტენტი -->
     <main>
         {% block content %}{% endblock %}
     </main>
 
     <footer>
-        <!-- ფუტერი ან სხვა ზოგადი ელემენტები -->
     </footer>
 </body>
 </html>
