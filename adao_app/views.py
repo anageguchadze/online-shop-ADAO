@@ -1,4 +1,4 @@
-from .models import Product, UserProfile
+from .models import Product, UserProfile, Cart, Favourite
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -71,8 +71,6 @@ def dashboard_view(request):
     return render(request, 'adao_app/dashboard.html')
 
 
-
-
 def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
@@ -122,3 +120,48 @@ def contact(request):
 
 def cart(request):
     return render(request, 'adao_app/cart.html')
+
+@login_required
+def add_to_cart(request, product_id):
+    product = Product.objects.get(id=product_id)
+    
+    # Check if the product is already in the cart
+    cart_item, created = Cart.objects.get_or_create(user=request.user, product=product)
+    
+    if not created:  # If the product is already in the cart, increase the quantity
+        cart_item.quantity += 1
+        cart_item.save()
+        messages.info(request, f'{product.name} quantity updated in your cart.')
+    else:
+        messages.success(request, f'{product.name} added to your cart.')
+
+    return redirect('cart')  # Redirect to cart view
+
+# View for displaying the Cart
+@login_required
+def cart_view(request):
+    cart_items = Cart.objects.filter(user=request.user)  # Get all cart items for the logged-in user
+    
+    return render(request, 'adao_app/cart.html', {'cart_items': cart_items})
+
+# Add product to Favourites
+@login_required
+def add_to_favourites(request, product_id):
+    product = Product.objects.get(id=product_id)
+
+    # Check if the product is already in the favourites
+    favourite_item, created = Favourite.objects.get_or_create(user=request.user, product=product)
+
+    if created:
+        messages.success(request, f'{product.name} added to your favourites!')
+    else:
+        messages.info(request, f'{product.name} is already in your favourites!')
+
+    return redirect('product_list')  # Redirect back to product list or favourites page
+
+
+@login_required
+def favourites_view(request):
+    favourite_items = Favourite.objects.filter(user=request.user)
+
+    return render(request, 'adao_app/favourites.html', {'favourite_items': favourite_items})

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Your Favourites{% endblock %}
+
+{% block content %}
+    <h1>Your Favourites</h1>
+    <ul>
+        {% for item in favourite_items %}
+          <li>
+            <h3>{{ item.product.name }}</h3>
+            <p>Price: ${{ item.product.price }}</p>
+            
+            {% if item.product.image %}
+              <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" width="100">
+            {% else %}
+              <p>No image available</p>
+            {% endif %}
+          </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

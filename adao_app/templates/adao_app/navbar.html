@@ -7,6 +7,8 @@
 
         {% if user.is_authenticated %}
             <li><p>Welcome, {{ user.username }}! <a href="{% url 'logout' %}">Logout</a></p></li>
+            <!-- Favourites link (only when logged in) -->
+            <li><a href="{% url 'favourites' %}" {% if request.path == '/favourites/' %}class="active"{% endif %}>Favourites</a></li>
         {% else %}
             <li><a href="{% url 'login' %}" {% if request.path == '/login/' %}class="active"{% endif %}>Login</a></li>
         {% endif %}

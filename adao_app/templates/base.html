@@ -17,17 +17,17 @@
                 <li><a href="{% url 'contact' %}" {% if request.path == '/contact/' %}class="active"{% endif %}>Contact</a></li>
         
                 {% if user.is_authenticated %}
-                    <!-- If the user is authenticated, show Dashboard instead of Login -->
+                    <!-- If the user is authenticated, show Dashboard and Favourites links -->
                     <li><a href="{% url 'dashboard' %}" {% if request.path == '/dashboard/' %}class="active"{% endif %}>Dashboard</a></li>
+                    <li><a href="{% url 'favourites' %}" {% if request.path == '/favourites/' %}class="active"{% endif %}>Favourites</a></li>
                 {% else %}
-                    <!-- If the user is not authenticated, show Login -->
+                    <!-- If the user is not authenticated, show Login link -->
                     <li><a href="{% url 'login' %}" {% if request.path == '/login/' %}class="active"{% endif %}>Login</a></li>
                 {% endif %}
         
                 <li><a href="{% url 'cart' %}" {% if request.path == '/cart/' %}class="active"{% endif %}>Cart</a></li>
             </ul>
         </nav>
-        
     </header>
     <main>
         {% block content %}{% endblock %}
