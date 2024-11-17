@@ -20,37 +20,27 @@ def login_view(request):
 
         if user is not None and user.check_password(password):
             login(request, user)
-            messages.success(request, "Successfully logged in!")
-            return redirect('dashboard')  # გადამისამართება დეშბორდზე
+            # Do not show success message here
+            return redirect('dashboard')  # Redirect to dashboard
         else:
+            # Only show an error message for invalid login
             messages.error(request, "Invalid email or password.")
     return render(request, 'adao_app/login.html')
 
 
 @login_required
 def profile_view(request):
-    # Ensure the profile exists
+    # Try to get or create the user's profile
     user_profile, created = UserProfile.objects.get_or_create(user=request.user)
-    if created:
-        # If a new profile was created, ensure all fields are empty
-        user_profile.first_name = ''
-        user_profile.last_name = ''
-        user_profile.phone_number = ''
-        user_profile.street = ''
-        user_profile.house_number = ''
-        user_profile.apartment_number = ''
-        user_profile.zip_code = ''
-        user_profile.city = ''
-        user_profile.save()
 
     if request.method == 'POST':
         form = UserProfileForm(request.POST, instance=user_profile)
         if form.is_valid():
             form.save()
             messages.success(request, "Profile updated successfully!")
-            return redirect('profile')
+            return redirect('profile')  # Redirect back to profile after save
         else:
-            messages.error(request, "Please correct the errors below.")
+            messages.error(request, "Please correct the error below.")
     else:
         form = UserProfileForm(instance=user_profile)
 
@@ -82,6 +72,7 @@ def dashboard_view(request):
 
 
 
+
 def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
@@ -110,8 +101,7 @@ def orders_view(request):
 
 def logout_view(request):
     logout(request)  # მომხმარებელი გავიდა სისტემიდან
-    return redirect('index')  # გადამისამართება მთავარ გვერდზე
-
+    return redirect('login')  
 
 def index(request):
     return render(request, 'adao_app/index.html')

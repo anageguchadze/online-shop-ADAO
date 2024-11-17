@@ -7,4 +7,10 @@
         <li><a href="{% url 'profile' %}">Profile</a></li>
         <li><a href="{% url 'orders' %}">Orders</a></li>
     </ul>
+
+    <!-- Logout Button -->
+    <form action="{% url 'logout' %}" method="POST">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
 {% endblock %}

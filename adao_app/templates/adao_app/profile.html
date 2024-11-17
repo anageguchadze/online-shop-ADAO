@@ -1,28 +1,59 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Your Profile</h2>
+    <a href="{% url 'dashboard' %}" class="btn btn-primary">Go to Dashboard</a>
+  <h2>Your Profile</h2>
 
-<form method="POST">
+  <form method="POST">
     {% csrf_token %}
-    {{ form.non_field_errors }}
+    
     <!-- Displaying the email (from User model) -->
     <div class="form-group">
         <label for="email">Email</label>
         <!-- Display email directly from the logged-in user's info -->
         <input type="email" id="email" name="email" value="{{ request.user.email }}" disabled>
     </div>
+
+    <div class="form-group">
+        <label for="first_name">First Name</label>
+        {{ form.first_name }}
+    </div>
     
-    {% for field in form %}
-        <div class="form-group">
-            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-            {{ field }}
-            {% if field.errors %}
-                <div class="text-danger">{{ field.errors|join:", " }}</div>
-            {% endif %}
-        </div>
-    {% endfor %}
-    
+    <div class="form-group">
+        <label for="last_name">Last Name</label>
+        {{ form.last_name }}
+    </div>
+
+    <div class="form-group">
+        <label for="phone_number">Phone Number</label>
+        {{ form.phone_number }}
+    </div>
+
+    <div class="form-group">
+        <label for="street">Street</label>
+        {{ form.street }}
+    </div>
+
+    <div class="form-group">
+        <label for="house_number">House Number</label>
+        {{ form.house_number }}
+    </div>
+
+    <div class="form-group">
+        <label for="apartment_number">Apartment Number</label>
+        {{ form.apartment_number }}
+    </div>
+
+    <div class="form-group">
+        <label for="zip_code">Zip Code</label>
+        {{ form.zip_code }}
+    </div>
+
+    <div class="form-group">
+        <label for="city">City</label>
+        {{ form.city }}
+    </div>
+
     <button type="submit" class="btn btn-primary">Save Changes</button>
-</form>
+  </form>
 {% endblock %}
