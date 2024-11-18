@@ -15,6 +15,12 @@
             {% else %}
               <p>No image available</p>
             {% endif %}
+
+            <!-- Add a "Remove" button to delete the item from favourites -->
+            <form action="{% url 'remove_from_favourites' item.product.id %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Remove</button>
+            </form>
           </li>
         {% endfor %}
     </ul>

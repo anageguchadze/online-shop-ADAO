@@ -25,7 +25,7 @@
                     <li><a href="{% url 'login' %}" {% if request.path == '/login/' %}class="active"{% endif %}>Login</a></li>
                 {% endif %}
         
-                <li><a href="{% url 'cart' %}" {% if request.path == '/cart/' %}class="active"{% endif %}>Cart</a></li>
+                <li><a href="{% url 'cart_view' %}" {% if request.path == '/cart/' %}class="active"{% endif %}>Cart</a></li>
             </ul>
         </nav>
     </header>

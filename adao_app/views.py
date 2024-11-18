@@ -124,25 +124,49 @@ def cart(request):
 @login_required
 def add_to_cart(request, product_id):
     product = Product.objects.get(id=product_id)
-    
+
     # Check if the product is already in the cart
     cart_item, created = Cart.objects.get_or_create(user=request.user, product=product)
-    
-    if not created:  # If the product is already in the cart, increase the quantity
+
+    if created:
+        messages.success(request, f'{product.name} added to your cart.')
+    else:
+        # If the item is already in the cart, update the quantity
         cart_item.quantity += 1
         cart_item.save()
         messages.info(request, f'{product.name} quantity updated in your cart.')
-    else:
-        messages.success(request, f'{product.name} added to your cart.')
 
-    return redirect('cart')  # Redirect to cart view
+    # Redirect to the cart view (not product list)
+    return redirect('product_list')  # Redirect to the cart page to view updated items
+
+
+
 
 # View for displaying the Cart
 @login_required
 def cart_view(request):
     cart_items = Cart.objects.filter(user=request.user)  # Get all cart items for the logged-in user
-    
+
+    if not cart_items:
+        messages.info(request, "Your cart is empty.")  # Show a message if the cart is empty
+
     return render(request, 'adao_app/cart.html', {'cart_items': cart_items})
+
+
+
+@login_required
+def remove_from_cart(request, product_id):
+    try:
+        # Get the cart item associated with the user and product
+        cart_item = Cart.objects.get(user=request.user, product_id=product_id)
+        cart_item.delete()  # Delete the item
+        messages.success(request, "Item removed from your cart.")
+    except Cart.DoesNotExist:
+        messages.error(request, "Item not found in your cart.")
+
+    return redirect('cart_view')  # Redirect back to the cart page
+
+
 
 # Add product to Favourites
 @login_required
@@ -165,3 +189,16 @@ def favourites_view(request):
     favourite_items = Favourite.objects.filter(user=request.user)
 
     return render(request, 'adao_app/favourites.html', {'favourite_items': favourite_items})
+
+
+@login_required
+def remove_from_favourites(request, product_id):
+    try:
+        # Get the favorite item associated with the user and product
+        favourite_item = Favourite.objects.get(user=request.user, product_id=product_id)
+        favourite_item.delete()  # Delete the item
+        messages.success(request, "Item removed from your favourites.")
+    except Favourite.DoesNotExist:
+        messages.error(request, "Item not found in your favourites.")
+
+    return redirect('favourites')  # Redirect back to the favourites page
